@@ -160,7 +160,11 @@ public class AuctionClient implements Serializable {
 		System.out.println("put - put item for bid");
 		System.out.println("bid - bid on item");
 		System.out.println("items - print items");
-		System.out.println("add - add listener");
+		System.out.println("add - add listener, strategies: ");
+		System.out.println("1 : If anyone outbids the client, automatically bid $1.00 more than the current bid, up to the maximum bid.");
+		System.out.println("2 : Wait until the last minute of the auction period, then bid 100% more than the current bid.");
+		System.out.println("add - add listener, strategies: ");
+		
 		System.out.println("exit - exit the client");
 	}
 

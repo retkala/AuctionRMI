@@ -36,7 +36,7 @@ public class WaitForLastSecondStrategy implements Observer, IAuctionListener, Se
 			try {							
 				this.hasBidded = true;				
 				System.out.println("Strategy2: item: "+item.toString() + ", "+ bidderName + " "+ this.hasBidded );
-				server.bidOnItem(bidderName, itemName, item.getCurrentBid() + 1);
+				server.bidOnItem(bidderName, itemName, item.getCurrentBid() * 2);
 				
 			} catch (RemoteException e) {
 				System.err.println(e.getMessage());
