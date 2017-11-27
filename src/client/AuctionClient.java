@@ -60,8 +60,13 @@ public class AuctionClient implements Serializable {
 			}
 			
 		} else if (strategy == STRATEGY_WAIT_UNTILL_LAST_SECOND) {
-			WaitForLastSecondStrategy s = new WaitForLastSecondStrategy(server, itemName, bidderName);
-			server.registerListener(s, itemName);
+			if (getRemainingTime(itemName) <= 1) {
+				System.out.println("Strategy couldn't be created. Too little time to the end of the auction.");
+			} else {
+				WaitForLastSecondStrategy s = new WaitForLastSecondStrategy(server, itemName, bidderName);
+				server.registerListener(s, itemName);
+				System.out.println("Strategy was created for item: " + itemName);
+			}			
 		}
 	}
 
@@ -163,9 +168,22 @@ public class AuctionClient implements Serializable {
 		System.out.println("add - add listener, strategies: ");
 		System.out.println("1 : If anyone outbids the client, automatically bid $1.00 more than the current bid, up to the maximum bid.");
 		System.out.println("2 : Wait until the last minute of the auction period, then bid 100% more than the current bid.");
-		System.out.println("add - add listener, strategies: ");
-		
+		System.out.println("add - add listener, strategies: ");		
 		System.out.println("exit - exit the client");
 	}
 
+	public int getRemainingTime(String itemName) {
+		ArrayList<Item> items;
+		try {
+			items = server.getItems();
+			for(Item item : items) {
+				if(item.getItemName().equals(itemName)){
+					return item.getRemainingTime();
+				}
+			}
+		} catch (RemoteException e) {			
+			e.printStackTrace();
+		}
+		return 0;
+	}
 }
