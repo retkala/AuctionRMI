@@ -27,23 +27,19 @@ public class WaitForOutbidStrategy implements IAuctionListener, Observer, Serial
 	@Override
 	public void update(Item item) {	
 		if(item.getCurrentBid() < maxBid && !item.getCurrentBidderName().equals(bidderName) && !item.getCurrentBidderName().equals("")) {
-//			System.out.println("Changed object: " + item.getItemName() + "observed object: "+ itemName);
 			try {
 				System.out.println("Strategy1: item: "+ item.toString() + ", "+ bidderName);
 				server.bidOnItem(bidderName, itemName, item.getCurrentBid()+1);				
 			} catch (RemoteException e) {
 				System.err.println("Error in WaitForOutbidStrategy" + e.getMessage());				
 			}
-		}
-		
+		}		
 	}
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		Item item = (Item)arg1;
-		update(item);
-
-		
+		update(item);		
 	}
 
 }
